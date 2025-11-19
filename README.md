@@ -23,7 +23,7 @@ Tech Stack: Python, PyTorch (CUDA), XGBoost, Scikit-Learn.
 
 
 
-Phase 2: Hardware Acceleration (Next Year Goal)
+# Phase 2: Hardware Acceleration (Next Year Goal)
 Focus: Porting the validated inference engines to FPGA hardware.
 
 Goal: To overcome the power and latency bottlenecks of standard software, enabling real-time prognostics at the network edge.
