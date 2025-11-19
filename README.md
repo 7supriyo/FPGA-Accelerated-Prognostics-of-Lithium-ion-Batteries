@@ -68,7 +68,7 @@ Accuracy: Superior R² and lower RMSE scores on unseen validation data.
 Robustness: Stable predictions even under noise-injected scenarios simulating real-world sensor error.
 
 🔒 License & Copyright
-Copyright © 2025 [Supriyo Roy]. All Rights Reserved.
+Copyright © 2025 Supriyo Roy. All Rights Reserved.
 
 No License Granted: This repository is visible for portfolio and demonstration purposes only.
 
