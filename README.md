@@ -110,10 +110,13 @@ The project's workflow is systematically structured:
     *   **Objective**: Aggregate and compare the performance of all developed models (PSO-XGBoost, GCDA-LSTM, Transformer-LSTM) against several standard ML baselines (Random Forest, LightGBM, MLP, SVR) for both SOH and RUL tasks.
     *   **Evaluation Metrics**: Calculates R², RMSE, MAE for all models.
     *   **Advanced Visualizations (IEEE-Compliant)**:
-        *   **Radar Charts**: Provide a multi-criteria view comparing accuracy (R²), precision (RMSE), and efficiency (training time) for top models across both tasks (`fig7_radar_combined.png`).
-        *   **Training Time Plots**: Bar charts illustrating the training duration of each model on a logarithmic scale (`fig7_time_combined.png`).
-        *   **Taylor Diagrams**: Visually represent the statistical relationship between the reference (true values) and predicted values, showing correlation, RMS error, and standard deviation in a single plot (`fig7a_taylor_soh.png`, `fig7e_taylor_rul.png`).
-        *   **REC Curves (Regression Error Characteristic)**: Plot the CDF of absolute errors, offering a comprehensive view of prediction accuracy across the entire error range (`fig7_rec_combined.png`).
+        *   **Radar Charts**: Provide a multi-criteria view comparing accuracy (R²), precision (RMSE), and efficiency (training time) for top models across both tasks (`fig7_radar_combined.png`).<img width="1800" height="812" alt="image" src="https://github.com/user-attachments/assets/44e25c09-a90e-4dbb-9010-fd900687a824" />
+
+        *   **Training Time Plots**: Bar charts illustrating the training duration of each model on a logarithmic scale (`fig7_time_combined.png`).<img width="2080" height="735" alt="image" src="https://github.com/user-attachments/assets/4a88b706-033c-43f1-bc3d-f7e8f5264ebc" />
+
+        
+        *   **REC Curves (Regression Error Characteristic)**: Plot the CDF of absolute errors, offering a comprehensive view of prediction accuracy across the entire error range (`fig7_rec_combined.png`).<img width="1745" height="689" alt="image" src="https://github.com/user-attachments/assets/d99fc24d-e06d-41c1-8f84-ac1087a6b3ca" />
+
     *   **Output**: Presents structured tables of comparison metrics for SOH and RUL.
 
 8.  **FPGA Deployment & Hardware Implementation (Cell 8)**:
