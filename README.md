@@ -67,7 +67,12 @@ The project's workflow is systematically structured:
     *   **Data Cleaning**: Handles potential outliers and missing values to ensure data quality.
     *   **Battery-Level Stratification**: Implements a robust split strategy where entire batteries are allocated to either training, validation, or test sets. This is *crucial* to prevent data leakage and ensure generalizability, with a diverse representation of temperature and chemistry in each split.
     *   **Data Integrity Verification**: Explicitly checks for overlaps between splits to confirm zero data leakage.
-    *   **Statistical Summaries & Visualizations**: Provides detailed statistics for each split and generates IEEE-style plots (`fig1_degradation_physics.png`, `fig2_statistical_analysis.png`, `fig3_split_analysis.png`, `fig4_rul_distributions.png`) to illustrate data characteristics and split distributions.
+    *   **Statistical Summaries & Visualizations**: Provides detailed statistics for each split and generates IEEE-style plots (`fig1_degradation_physics.png`, <img width="2685" height="735" alt="image" src="https://github.com/user-attachments/assets/ac42dbd7-8917-41c0-ba0f-51d3eb611d85" />
+`fig2_statistical_analysis.png`, `fig3_split_analysis.png`, `fig4_rul_distributions.png`) to illustrate data characteristics and split distributions.<img width="2071" height="1485" alt="image" src="https://github.com/user-attachments/assets/39d6a02c-d332-4763-81ec-ea4b096b2e5f" />
+<img width="2384" height="735" alt="image" src="https://github.com/user-attachments/assets/ffd6d560-101f-4b19-a715-a2edf77a20b8" />
+<img width="2085" height="735" alt="image" src="https://github.com/user-attachments/assets/858b7905-4937-4654-86dc-6f61e1f6e3b4" />
+
+
     *   **Output**: Saves processed `train.pkl`, `val.pkl`, `test.pkl` dataframes and a `data_integrity_report.json`.
 
 3.  **PSO-XGBoost RUL Prediction (Cell 4)**:
@@ -76,7 +81,8 @@ The project's workflow is systematically structured:
     *   **Optimization**: Employs **Particle Swarm Optimization (PSO)** via `pyswarms` to find optimal hyperparameters for `XGBoost` (e.g., `n_estimators`, `learning_rate`, `max_depth`, `gamma`). The objective function minimizes validation MSE.
     *   **Evaluation**: The best model is trained on a combined train+validation set and evaluated on the strictly held-out test set using R², RMSE, and MAE.
     *   **Visualizations**: Generates plots showing actual vs. predicted RUL, residual distribution, and feature importance (`fig5_xgb_results.png`).
-    *   **Output**: Saves the trained `xgb_rul_model.json`.
+    *   **Output**: Saves the trained `xgb_rul_model.json`.<img width="2664" height="726" alt="image" src="https://github.com/user-attachments/assets/204f1810-4094-46c0-a184-14c1651dd694" />
+
 
 4.  **Deep Learning RUL Prediction (Cell 5)**:
     *   **Objective**: Benchmark advanced deep learning architectures for RUL prediction against the PSO-XGBoost baseline.
@@ -87,7 +93,14 @@ The project's workflow is systematically structured:
     *   **Training**: Both models are trained using `AdamW` optimizer, `MSELoss` criterion, and `ReduceLROnPlateau` scheduler. Early stopping is implicit via saving the best validation loss model.
     *   **Evaluation**: Performance is reported using R², RMSE, and MAE on the test set. Predictions are inverse-transformed from the normalized scale.
     *   **Visualizations**: Generates convergence plots, actual vs. predicted scatter plots, residual distributions, and a performance comparison bar chart for both DL models, including training times (`fig1_convergence.png`, `fig2_rul_predictions.png`, `fig3_residual_distributions.png`, `fig4_model_metrics_rul.png`, `fig5_training_times.png`).
-    *   **Output**: Saves `best_GCDA_LSTM.pth` and `best_Transformer_LSTM.pth` model weights.
+    *   **Output**: Saves `best_GCDA_LSTM.pth` and `best_Transformer_LSTM.pth` model weights.<img width="1116" height="556" alt="image" src="https://github.com/user-attachments/assets/a4228bb0-9d9a-43a3-9d38-efe6020013d4" />
+    <img width="1054" height="556" alt="image" src="https://github.com/user-attachments/assets/ca70592c-6a24-4ba5-804b-5fc420f59aa5" />
+    <img width="1057" height="556" alt="image" src="https://github.com/user-attachments/assets/70fc6401-3bb6-45ba-a48a-818257e0fafe" />
+    <img width="696" height="655" alt="image" src="https://github.com/user-attachments/assets/027dfc24-b9f6-44ae-8008-3c68a102b755" />
+
+
+
+
 
 5.  **PSO-XGBoost SOH Prediction (Cell 5.1)**:
     *   **Objective**: Establish a strong machine learning baseline for SOH prediction, which is generally considered an easier task than RUL.
@@ -96,7 +109,8 @@ The project's workflow is systematically structured:
     *   **Physical Constraint**: Predictions are **clamped** to the `[0, 100]%` range to enforce physical validity.
     *   **Evaluation**: Reports R², RMSE, and MAE on the test set.
     *   **Visualizations**: Generates actual vs. predicted SOH, residual distribution, and feature importance plots (`fig5_1_xgb_soh_results.png`).
-    *   **Output**: Saves the trained `xgb_soh_model.json`.
+    *   **Output**: Saves the trained `xgb_soh_model.json`.<img width="2666" height="726" alt="image" src="https://github.com/user-attachments/assets/34101ec0-9490-4592-bd71-553989fdffff" />
+
 
 6.  **Deep Learning SOH Prediction (Cell 6)**:
     *   **Objective**: Evaluate GCDA-LSTM and Transformer-LSTM for SOH prediction.
@@ -104,7 +118,14 @@ The project's workflow is systematically structured:
     *   **Data Preparation**: Identical scaling and sequence generation as RUL, but for the SOH target.
     *   **Physical Constraint**: Model outputs are **clamped** to `[0, 100]%` after inverse scaling to ensure physical consistency.
     *   **Evaluation & Visualizations**: Similar to DL RUL, producing convergence, scatter, residual, and metric comparison plots, including training times (`fig7a_soh_convergence.png`, `fig7b_soh_scatter.png`, `fig7c_soh_residual_distributions.png`, `fig7d_soh_model_metrics.png`, `fig7e_soh_training_times.png`).
-    *   **Output**: Saves `best_soh_GCDA_LSTM.pth` and `best_soh_Transformer_LSTM.pth` model weights.
+    *   **Output**: Saves `best_soh_GCDA_LSTM.pth` and `best_soh_Transformer_LSTM.pth` model weights.<img width="1048" height="1036" alt="image" src="https://github.com/user-attachments/assets/85197d9e-58c8-46c2-ad6a-15a3af700911" />
+    <img width="1054" height="556" alt="image" src="https://github.com/user-attachments/assets/3972abb5-32b4-499c-a237-b3e7922cb3f2" />
+    <img width="1052" height="556" alt="image" src="https://github.com/user-attachments/assets/7f0a362b-0062-4468-8d2c-b73316032b08" />
+    <img width="696" height="655" alt="image" src="https://github.com/user-attachments/assets/590f9e44-7d20-4787-ad5e-f0a59d41a5a1" />
+
+
+
+
 
 7.  **Combined Analysis & Model Comparison (Cell 7)**:
     *   **Objective**: Aggregate and compare the performance of all developed models (PSO-XGBoost, GCDA-LSTM, Transformer-LSTM) against several standard ML baselines (Random Forest, LightGBM, MLP, SVR) for both SOH and RUL tasks.
