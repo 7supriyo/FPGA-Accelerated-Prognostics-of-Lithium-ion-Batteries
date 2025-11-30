@@ -167,20 +167,7 @@ The project's workflow is systematically structured:
 *   **Model Size**: `~18.63 KB` (highly optimized for embedded systems).
 *   **Generated Artifacts**: `quantized_weights.h`, `inference.cpp`, `testbench.cpp` within the `fpga_deployment` folder, ready for synthesis with Xilinx Vitis HLS.
 
-## Setup and Usage
 
-This project is primarily developed and tested within a Google Colab environment. To replicate the results and explore the code:
-
-1.  **Open the Notebook**: Ensure you have access to the main `.ipynb` notebook file.
-2.  **Execute Cells Sequentially**: Run each cell in the notebook from top to bottom. The notebook is structured to flow logically through environment setup, data processing, model training, evaluation, and hardware deployment code generation.
-    *   **Cell 1**: Initializes global settings, random seeds, and compute device (GPU recommended for DL models).
-    *   **Cell 2**: Performs data loading, SOH/RUL calculation, and crucial battery-level data splitting.
-    *   **Cell 4**: Trains and evaluates the PSO-XGBoost model for RUL.
-    *   **Cell 5**: Trains and evaluates the Deep Learning models (GCDA-LSTM, Transformer-LSTM) for RUL.
-    *   **Cell 5.1**: Trains and evaluates the PSO-XGBoost model for SOH.
-    *   **Cell 6**: Trains and evaluates the Deep Learning models (GCDA-LSTM, Transformer-LSTM) for SOH.
-    *   **Cell 7**: Aggregates all model results and generates comprehensive comparison plots.
-    *   **Cell 8**: Generates FPGA-ready C++ code and performs quantization analysis.
 3.  **Inspect Outputs**: After execution, the `outputs/` directory within your Colab environment will be populated with various generated files, including:
     *   Processed `.pkl` dataframes (`train.pkl`, `val.pkl`, `test.pkl`).
     *   Statistical summaries and data integrity reports.
