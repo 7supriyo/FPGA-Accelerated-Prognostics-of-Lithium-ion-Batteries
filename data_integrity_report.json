@@ -1,0 +1,119 @@
+{
+  "metadata": {
+    "random_seed": 42,
+    "timestamp": "2025-11-29T19:31:25.387225",
+    "nominal_capacity_nasa": 2.0,
+    "nominal_capacity_oxford": 0.74
+  },
+  "dataset_summary": {
+    "total_samples": 3087,
+    "total_batteries": 42,
+    "nasa_samples": 2568,
+    "nasa_batteries": 34,
+    "oxford_samples": 519,
+    "oxford_cells": 8
+  },
+  "splits": {
+    "train": {
+      "samples": 1471,
+      "batteries": [
+        "B0046",
+        "Oxford_6",
+        "B0025",
+        "B0051",
+        "B0044",
+        "B0047",
+        "B0038",
+        "B0039",
+        "B0043",
+        "B0026",
+        "B0027",
+        "B0034",
+        "B0028",
+        "B0040",
+        "Oxford_1",
+        "Oxford_5",
+        "B0053",
+        "B0049",
+        "Oxford_2",
+        "B0050",
+        "B0055",
+        "B0031",
+        "B0032",
+        "B0052",
+        "B0056",
+        "B0054"
+      ],
+      "soh_range": [
+        5.951915929670883,
+        100.0
+      ],
+      "rul_range": [
+        0.0,
+        8200.0
+      ]
+    },
+    "val": {
+      "samples": 661,
+      "batteries": [
+        "B0041",
+        "B0007",
+        "B0042",
+        "Oxford_7",
+        "B0006",
+        "B0030",
+        "B0029",
+        "Oxford_3"
+      ],
+      "soh_range": [
+        5.301590065698891,
+        100.0
+      ],
+      "rul_range": [
+        0.0,
+        8100.0
+      ]
+    },
+    "test": {
+      "samples": 955,
+      "batteries": [
+        "B0033",
+        "B0005",
+        "Oxford_4",
+        "B0036",
+        "Oxford_8",
+        "B0018",
+        "B0048",
+        "B0045"
+      ],
+      "soh_range": [
+        10.128165190362912,
+        100.0
+      ],
+      "rul_range": [
+        0.0,
+        8100.0
+      ]
+    }
+  },
+  "data_integrity": {
+    "train_val_overlap": [],
+    "train_test_overlap": [],
+    "val_test_overlap": [],
+    "leakage_detected": false,
+    "all_batteries_assigned": true
+  },
+  "validation": {
+    "soh_range": [
+      5.301590065698891,
+      100.0
+    ],
+    "rul_range": [
+      0.0,
+      8200.0
+    ],
+    "negative_soh_count": 0,
+    "negative_rul_count": 0,
+    "soh_above_100_count": 0
+  }
+}
