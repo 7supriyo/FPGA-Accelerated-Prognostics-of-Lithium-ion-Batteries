@@ -1,71 +1,116 @@
 # FPGA-Accelerated Prognostics of Lithium-ion Batteries
 ⚠️ LEGAL NOTICE: PROPRIETARY CODE This repository contains proprietary research and source code. All rights are reserved. No permission is granted to use, copy, modify, distribute, or sublicense this software for any commercial or academic purpose without explicit written consent from the author.
 
-# 📖 Overview
-This project implements a high-precision prognostic framework for estimating the Remaining Useful Life (RUL) and State of Health (SOH) of Lithium-ion batteries.
+Here's the comprehensive README.md content tailored for your GitHub project. You can copy this directly into your README.md file in the repository:
 
-Currently, the system exists as a high-fidelity software prototype utilizing hybrid deep learning architectures (PSO-XGBoost and Transformer-LSTM). The primary roadmap objective for the upcoming year is the transition of these models onto Field-Programmable Gate Arrays (FPGAs) to achieve microsecond-level latency for embedded Battery Management Systems (BMS).
+# FPGA-Accelerated Prognostics of Lithium-ion Batteries
 
-# 🚀 Project Roadmap
-Phase 1: Software Simulation & Validation (Current Status)
-Focus: Model architecture design, physics-informed feature engineering, and hyperparameter optimization.
+## Project Overview
 
-Tech Stack: Python, PyTorch (CUDA), XGBoost, Scikit-Learn.
+This project focuses on developing advanced machine learning models for accurate State of Health (SOH) and Remaining Useful Life (RUL) prediction of Electric Vehicle (EV) Lithium-ion batteries. The goal is to create robust, data-driven solutions capable of real-time deployment on embedded systems, specifically FPGAs, for enhanced battery management systems (BMS).
 
- # Outcome:
+## Research Motivation
 
- The models demonstrate high accuracy in predicting battery health metrics:
-* **PSO-XGBoost:** Achieved **R² > 0.999** for both RUL and SOH prediction on the augmented test set.
-* **Transformer-LSTM:** Showed strong performance in capturing temporal degradation trends with **R² > 0.99**.
-* **Baseline Comparisons:** Outperformed standard baselines like Random Forest, KNN, and simple LSTMs in terms of error metrics and inference speed potential.
- <img width="2332" height="2633" alt="rul output" src="https://github.com/user-attachments/assets/6a06b533-186a-48de-aa0a-4e9a06433df4" />
- <img width="2375" height="2976" alt="soh output" src="https://github.com/user-attachments/assets/07686829-a672-4650-b085-a737ad6dd150" />
+Accurate SOH and RUL predictions are crucial for proactive battery maintenance, optimizing charging strategies, reducing battery waste, and enhancing safety in EVs. This research addresses the limitations of traditional physics-based models by proposing novel data-driven approaches that are robust to real-world variability and suitable for hardware acceleration.
 
+## Proposed Contributions
 
+1.  **Novel GCDA-LSTM Architecture**: Combining Graph Convolutional Networks with Dual Attention mechanisms for battery degradation modeling.
+2.  **Comprehensive Comparison**: Benchmarking PSO-optimized XGBoost against Deep Learning models (GCDA-LSTM, Transformer-LSTM).
+3.  **Data Augmentation**: Implementing 3-parameter synthetic data augmentation for robust training.
+4.  **Battery-Level Stratification**: Ensuring zero data leakage during train/validation/test splits.
+5.  **FPGA-Ready Quantization**: Preparing models for real-time BMS deployment using Q16.16 fixed-point quantization.
 
-# Phase 2: Hardware Acceleration (Next Year Goal)
-Focus: Porting the validated inference engines to FPGA hardware.
+## Datasets
 
-Goal: To overcome the power and latency bottlenecks of standard software, enabling real-time prognostics at the network edge.
+The study utilizes two prominent battery aging datasets:
 
-# Impact:
+*   **NASA Li-ion Battery Aging Dataset**: Comprising 34 18650 Li-ion cells with a nominal capacity of 2.0 Ah, tested under various temperature and discharge conditions.
+*   **Oxford Battery Degradation Dataset 1**: Featuring 8 Kokam SLPB533459H4 pouch cells (LCO-NCO chemistry) with a nominal capacity of 0.74 Ah, tested at 40°C under urban Artemis drive cycles.
 
-Eliminating Premature Retirement: Utilizing batteries to their true physical limits.
+## Methodology & Workflow
 
-Circular Economy: Enabling instant, low-energy screening of retired EV batteries for second-life grid storage.
+The project follows a structured methodology:
 
-# 📊 Datasets
-This research utilizes premier open-source datasets for model training and validation:
+1.  **Environment Setup**: Configuration of libraries, reproducibility settings, device detection (GPU/CPU/TPU), IEEE plotting standards, and project constants.
+2.  **Data Loading & Preprocessing**: Loading raw `.mat` files, extracting relevant features (capacity, cycle number, temperature), calculating SOH and RUL based on physics principles, and performing rigorous battery-level train/validation/test splitting to prevent data leakage.
+3.  **Feature Engineering**: Creation of derived features like `capacity_fade`, `capacity_retention`, and `degradation_rate` to enhance model performance.
+4.  **ML Baseline (PSO-XGBoost)**:
+    *   **RUL Prediction**: Particle Swarm Optimization (PSO) is used to tune XGBoost hyperparameters for Remaining Useful Life prediction. Features include `cycle_num`, `ambient_temp`, and `capacity_Ahr`.
+    *   **SOH Prediction**: Similarly, PSO-optimized XGBoost is applied for State of Health prediction, leveraging enhanced features.
+5.  **Deep Learning Models**: Implementation and training of two advanced sequence models:
+    *   **GCDA-LSTM**: A novel architecture incorporating Graph Convolutional layers and Dual Attention with LSTM for capturing temporal and relational dependencies.
+    *   **Transformer-LSTM**: Combining Transformer Encoder layers with LSTM for robust sequence modeling.
+6.  **Comparative Analysis**: Evaluation of all models (baselines, PSO-optimized, and Deep Learning) using standard metrics (R², RMSE, MAE) and visualization of performance, convergence, residual distributions, and training times.
+7.  **FPGA Deployment**: Exporting trained model weights (e.g., a simple LSTM) to Q16.16 fixed-point C++ header files, generating HLS-compatible inference code, and conducting quantization error analysis for hardware implementation.
 
-NASA PCoE Data Set Repository
+## Key Results Summary
 
-Usage: Randomized usage profiles (Random Walk) to simulate unpredictable load conditions.
+### RUL Prediction Performance (on Test Set)
 
-Link:https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/
+| Model          | R²      | RMSE (Cycles) | MAE (Cycles) |
+| :------------- | :------ | :------------ | :----------- |
+| PSO-XGBoost    | 0.8907  | 443.34        | 234.13       |
+| GCDA-LSTM      | 0.7856  | 520.2         | 245.8        |
+| Transformer-LSTM | 0.8033  | 498.2         | 236.4        |
 
-Oxford Battery Degradation Dataset
+*(Note: PSO-XGBoost demonstrated superior RUL prediction among the listed models.)*
 
-Usage: Long-term degradation data for characterizing aging curves across different thermal conditions.
+### SOH Prediction Performance (on Test Set)
 
-Link: https://ora.ox.ac.uk/objects/uuid:03ba4b01-cfed-46d3-9b1a-7d4a7bdf6fac
+| Model          | R²      | RMSE (%) | MAE (%) |
+| :------------- | :------ | :------- | :------ |
+| PSO-XGBoost    | 0.9925  | 1.34     | 0.33    |
+| GCDA-LSTM      | 0.9284  | 4.02     | 1.56    |
+| Transformer-LSTM | 0.9959  | 0.97     | 0.69    |
 
-# 🧠 Methodological Approach
-The repository (XGBoost+LSTM(CUDA).ipynb) contains the complete end-to-end pipeline:
+*(Note: Both PSO-XGBoost and Transformer-LSTM achieved excellent SOH prediction with R² > 0.99, with Transformer-LSTM showing slightly better overall accuracy.)*
 
-1. Physics-Informed Data Augmentation
-To address data scarcity, a custom augmentation pipeline generates synthetic cycling data based on electrochemical degradation laws (Square Root, Logarithmic, and Polynomial aging factors), significantly expanding the training distribution.
+### Hardware Implementation
 
-2. Hybrid Modeling Architecture
-PSO-XGBoost: Utilizes Particle Swarm Optimization to auto-tune XGBoost regressors, capturing non-linear relationships between voltage/current features and SOH.
+An example LSTM model was prepared for FPGA deployment, including:
 
-Transformer-LSTM: Leveraging the attention mechanism for global context and LSTMs for sequential temporal dependencies, providing robust RUL trajectory prediction.
+*   **Q16.16 Fixed-Point Quantization**: Conversion of floating-point weights to integer representation for hardware efficiency. Average quantization error was approximately `0.000004`.
+*   **C++ HLS Code Generation**: Creation of `quantized_weights.h`, `inference.cpp` (with fixed-point arithmetic functions and LSTM cell logic), and `testbench.cpp` for 
+3.  **Review Outputs**: Check the `outputs/` directory for generated plots, saved models (`.json`, `.pth`), data splits (`.pkl`), and FPGA deployment files (`.h`, `.cpp`, `.zip`).
 
-# 📈 Key Results
-The proposed hybrid approach outperforms traditional baselines (Random Forest, SVR, Vanilla LSTM) in the following metrics:
+### Dependencies
 
-Accuracy: Superior R² and lower RMSE scores on unseen validation data.
+Key Python libraries required include:
 
-Robustness: Stable predictions even under noise-injected scenarios simulating real-world sensor error.
+*   `numpy`
+*   `pandas`
+*   `scipy`
+*   `matplotlib`
+*   `seaborn`
+*   `scikit-learn`
+*   `xgboost`
+*   `lightgbm`
+*   `torch`
+*   `pyswarms`
+
+*(`pyswarms` might require `pip install pyswarms` if not already present.)*
+
+## Generated Outputs
+
+The `outputs/` directory will contain:
+
+*   `train.pkl`, `val.pkl`, `test.pkl`: Processed data splits.
+*   `dataset_statistics.csv`: Statistical summary of the dataset.
+*   `data_integrity_report.json`: Details on data splitting and leakage verification.
+*   `fig*.png`: Various IEEE-style plots for data analysis, model performance, and comparisons.
+*   `xgb_rul_model.json`, `xgb_soh_model.json`: Saved PSO-XGBoost models.
+*   `best_GCDA_LSTM.pth`, `best_Transformer_LSTM.pth`, `best_soh_GCDA_LSTM.pth`, `best_soh_Transformer_LSTM.pth`: Saved Deep Learning model weights.
+*   `fpga_deployment/`: Directory containing C++ headers and source files for FPGA implementation.
+*   `fpga_deployment_package.zip`: Compressed archive of FPGA deployment artifacts.
+
+## References
+
+This research is intended to contribute to the field of battery prognostics, building upon and extending works such as:
+
+*   NASA Prognostics Center of Excellence Battery Data Set. (Available at: https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/)
+*   Birkl, C.R., "Diagnosis and Prognosis of Degradation in Lithium-Ion Batteries", PhD thesis, University of Oxford, 2017.
+
 
 🔒 License & Copyright
 Copyright © 2025 Supriyo Roy. All Rights Reserved.
